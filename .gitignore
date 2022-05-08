@@ -5,3 +5,7 @@ package-lock.json
 .idea/
 src
 webpack.config.js
+dist/scss
+dist/styles.css.map
+dist/styles.scss
+dist/main.js.map
