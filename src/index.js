@@ -16,7 +16,7 @@ const KEYBOARD_ON_PLACE = document.createElement('div');
 PLACE.append(KEYBOARD_ON_PLACE);
 
 const DESCRIPTION = document.createElement('p');
-DESCRIPTION.innerHTML = 'Use ⌘ + space button to switch language';
+DESCRIPTION.innerHTML = 'To switch language use ⌥ (Alt) button or generic language button at bottom left';
 PLACE.append(DESCRIPTION);
 
 const KEYBOARD = new Keyboard(KEYBOARD_ON_PLACE, TEXT_AREA);

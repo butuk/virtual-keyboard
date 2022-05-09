@@ -493,8 +493,8 @@ const BUTTONS = {
     {
       btnName: 'Language',
       type: 'modifier',
-      symbol: 'by',
-      alternative: 'en',
+      symbol: 'EN',
+      alternative: 'BY',
       size: 'small',
     },
     {

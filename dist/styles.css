@@ -138,6 +138,10 @@ button {
   background: #f6f6f6;
   box-shadow: 4px 4px 8px #eaeaea, -4px -4px 8px #ffffff;
 }
+
+button:focus {
+  outline: none;
+}
 button:hover {
   color: red;
 }

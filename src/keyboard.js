@@ -6,7 +6,7 @@ export default class Keyboard {
     this.keyboard = keyboard;
     this.textarea = textarea;
     this.buttons = buttons;
-    this.layout = localStorage.getItem('language') === 'by' ? 'by' : 'en';
+    this.layout = 'en';
     this.caps = false;
     this.btns = [];
   }
@@ -42,6 +42,72 @@ export default class Keyboard {
     });
   }
 
+  switchCase() {
+    const symbols = this.btns.filter((button) => button.classList.contains('button_symbol'));
+
+    if (!this.caps) {
+      if (this.layout === 'en') {
+        symbols.forEach((symbol) => {
+          // eslint-disable-next-line no-param-reassign
+          symbol.innerText = symbol.getAttribute('shift-en');
+        });
+      } else {
+        symbols.forEach((symbol) => {
+          // eslint-disable-next-line no-param-reassign
+          symbol.innerText = symbol.getAttribute('shift-by');
+        });
+      }
+      this.caps = true;
+    } else {
+      if (this.layout === 'en') {
+        symbols.forEach((symbol) => {
+          // eslint-disable-next-line no-param-reassign
+          symbol.innerText = symbol.getAttribute('char-en');
+        });
+      } else {
+        symbols.forEach((symbol) => {
+          // eslint-disable-next-line no-param-reassign
+          symbol.innerText = symbol.getAttribute('char-by');
+        });
+      }
+      this.caps = false;
+    }
+  }
+
+  switchLanguage() {
+    const symbols = this.btns.filter((button) => button.classList.contains('button_symbol'));
+
+    if (this.layout === 'en') {
+      if (this.caps) {
+        symbols.forEach((symbol) => {
+          // eslint-disable-next-line no-param-reassign
+          symbol.innerText = symbol.getAttribute('shift-by');
+        });
+      } else {
+        symbols.forEach((symbol) => {
+          // eslint-disable-next-line no-param-reassign
+          symbol.innerText = symbol.getAttribute('char-by');
+        });
+      }
+      this.layout = 'by';
+      document.getElementById('Language').innerHTML = 'BY';
+    } else if (this.layout === 'by') {
+      if (this.caps) {
+        symbols.forEach((symbol) => {
+          // eslint-disable-next-line no-param-reassign
+          symbol.innerText = symbol.getAttribute('shift-en');
+        });
+      } else {
+        symbols.forEach((symbol) => {
+          // eslint-disable-next-line no-param-reassign
+          symbol.innerText = symbol.getAttribute('char-en');
+        });
+      }
+      this.layout = 'en';
+      document.getElementById('Language').innerHTML = 'EN';
+    }
+  }
+
   changeTextarea(button) {
     const field = this.textarea;
     let start = this.textarea.selectionStart;
@@ -56,6 +122,7 @@ export default class Keyboard {
       'AltRight',
       'MetaLeft',
       'MetaRight',
+      'Language',
     ];
     let content;
 
@@ -107,37 +174,50 @@ export default class Keyboard {
   }
 
   listenEvents() {
+    // Real keyboard
     document.addEventListener('keydown', (keyEvent) => {
-      keyEvent.preventDefault();
       const button = document.getElementById(keyEvent.code);
-      button.classList.add('pressed');
-      this.changeTextarea(button);
+      keyEvent.preventDefault();
+      if (keyEvent) {
+        button.classList.add('pressed');
+      }
+      if ((keyEvent.code === 'CapsLock' && !keyEvent.repeat) || keyEvent.code === 'ShiftLeft' || keyEvent.code === 'ShiftRight') {
+        this.switchCase();
+      } else if (keyEvent.code === 'AltLeft' || keyEvent.code === 'AltRight') {
+        this.switchLanguage();
+      } else {
+        this.changeTextarea(button);
+      }
     });
 
     document.addEventListener('keyup', (keyEvent) => {
       keyEvent.preventDefault();
       const button = document.getElementById(keyEvent.code);
+      if (keyEvent.code === 'ShiftLeft' || keyEvent.code === 'ShiftRight') {
+        this.switchCase();
+      }
       button.classList.remove('pressed');
     });
 
+    // Virtual keyboard
     this.btns.forEach((button) => {
       button.addEventListener('mousedown', (event) => {
+        if (button.id === 'Language') {
+          this.switchLanguage();
+        }
         const eventKeyDown = new KeyboardEvent('keydown', { code: event.target.id });
         document.dispatchEvent(eventKeyDown);
-        this.pressed = true;
       });
 
       button.addEventListener('mouseup', (event) => {
         const eventKeyUp = new KeyboardEvent('keyup', { code: event.target.id });
         document.dispatchEvent(eventKeyUp);
-        this.pressed = false;
       });
 
       button.addEventListener('mouseout', (event) => {
         if (this.pressed) {
           const eventKeyUp = new KeyboardEvent('keyup', { code: event.target.id });
           document.dispatchEvent(eventKeyUp);
-          this.pressed = false;
         }
       });
     });
