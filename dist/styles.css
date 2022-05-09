@@ -14,7 +14,6 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
 }
@@ -39,7 +38,6 @@ blockquote, q {
 
 blockquote:before, blockquote:after,
 q:before, q:after {
-  content: "";
   content: none;
 }
 
@@ -147,10 +145,10 @@ button:active {
 }
 .button_modifier {
   font-weight: 400;
-  color: #c88;
-  background: #ecf2f2;
+  color: #258;
+  background: #eff2f2;
 }
-.button_space {
+.button_size_space {
   width: 23rem;
 }
 .button_size_small {
@@ -163,4 +161,6 @@ button:active {
   width: 8rem;
 }
 
-/*# sourceMappingURL=styles.css.map */
+.pressed {
+  box-shadow: inset 5px 5px 8px #e2e2e2, inset -5px -5px 8px #ffffff;
+}

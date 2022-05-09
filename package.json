@@ -1,0 +1,33 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "Virtual keyboard task for RS scholl",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/butuk/virtual-keyboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/butuk/virtual-keyboard/issues"
+  },
+  "homepage": "https://github.com/butuk/virtual-keyboard#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "path": "^0.12.7",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
+  }
+}
