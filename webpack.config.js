@@ -9,9 +9,6 @@ const configuration = {
     filename: 'main.js',
     publicPath: 'dist/',
   },
-  devServer: {
-    overlay: true,
-  },
   devtool: 'source-map',
   plugins: [new ESLintPlugin()],
 };

@@ -15,6 +15,12 @@ PLACE.append(TEXT_AREA);
 const KEYBOARD_ON_PLACE = document.createElement('div');
 PLACE.append(KEYBOARD_ON_PLACE);
 
+const DESCRIPTION = document.createElement('p');
+DESCRIPTION.innerHTML = 'Use ⌘ + space button to switch language';
+PLACE.append(DESCRIPTION);
+
 const KEYBOARD = new Keyboard(KEYBOARD_ON_PLACE, TEXT_AREA);
 KEYBOARD.generate();
 KEYBOARD.listenEvents();
+
+TEXT_AREA.focus();

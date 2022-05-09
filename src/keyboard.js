@@ -42,19 +42,80 @@ export default class Keyboard {
     });
   }
 
-  changeTextarea(text) {
-    this.textarea.setRangeText(text);
+  changeTextarea(button) {
+    const field = this.textarea;
+    let start = this.textarea.selectionStart;
+    const end = this.textarea.selectionEnd;
+    const notMakingSymbols = [
+      'Backspace',
+      'CapsLock',
+      'ShiftLeft',
+      'ShiftRight',
+      'ControlLeft',
+      'AltLeft',
+      'AltRight',
+      'MetaLeft',
+      'MetaRight',
+    ];
+    let content;
+
+    // Backspace work
+    if (this.textarea.selectionStart === this.textarea.selectionEnd && button.id === 'Backspace') {
+      start = Math.max(0, start - 1);
+    }
+    if (button.id === 'Backspace') {
+      this.textarea.setRangeText('', start, end);
+    }
+
+    // Enter, tab and arrows symbols
+    switch (button.id) {
+      case 'Enter':
+        content = '\n';
+        break;
+
+      case 'Tab':
+        content = '    ';
+        break;
+
+      case 'ArrowUp':
+        content = '↑';
+        break;
+
+      case 'ArrowLeft':
+        content = '←';
+        break;
+
+      case 'ArrowDown':
+        content = '↓';
+        break;
+
+      case 'ArrowRight':
+        content = '→';
+        break;
+
+      default:
+        content = button.textContent;
+    }
+
+    // Entering symbols
+    if (!notMakingSymbols.includes(button.id)) {
+      field.setRangeText(content);
+      this.textarea.selectionStart = start + content.length;
+      this.textarea.selectionEnd = this.textarea.selectionStart;
+      this.textarea.focus();
+    }
   }
 
   listenEvents() {
     document.addEventListener('keydown', (keyEvent) => {
+      keyEvent.preventDefault();
       const button = document.getElementById(keyEvent.code);
       button.classList.add('pressed');
-      keyEvent.preventDefault();
-      this.changeTextarea(button.textContent);
+      this.changeTextarea(button);
     });
 
     document.addEventListener('keyup', (keyEvent) => {
+      keyEvent.preventDefault();
       const button = document.getElementById(keyEvent.code);
       button.classList.remove('pressed');
     });

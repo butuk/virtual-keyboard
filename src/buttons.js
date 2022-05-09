@@ -518,7 +518,7 @@ const BUTTONS = {
     {
       btnName: 'Space',
       type: 'modifier',
-      symbol: '&nbsp;',
+      symbol: '&ensp;',
       size: 'space',
     },
     {
